@@ -36,15 +36,26 @@ const SKILLS = [
   { name: "AI", level: 72 },
   { name: "Rust", level: 65 },
   { name: "MySql", level: 78 },
+  { name: "React", level: 45},
+  { name: "Tailwind", level: 45},
 ];
 
 const TAGS = ["HTML", "TypeScript", "Laravel", "Vue.js", "Rust", "AI", "DevOps"];
 
 const PROJECTS = [
   {
+    title: "ENIAC ACADEMY",
+    description:
+      "Desenvolvi o portal Eniac Academy, uma plataforma web completa que conecta alunos da faculdade a oportunidades de estágio e trainee. O site serve como uma ponte direta entre os talentos da instituição e as empresas parceiras, facilitando o processo de recrutamento e o início da jornada profissional dos estudantes.",
+    tags: ["Laravel", "Vue", "TypeScript"],
+    year: 2025,
+    live: "",
+    repo: "https://github.com/Ratatosk123/Projeto-Sistema-de-Reserva-de-Hotel-",
+  },
+  {
     title: "Sistema de Reserva de Hotel (Projeto - Iniciante)",
     description:
-      "Sistema de Hotel para cadastro de quarto e para veirificar disponibilidades",
+      "Desenvolvi um sistema de gestão para hotéis focado em otimizar a administração de acomodações. A plataforma permite o cadastro detalhado de quartos e oferece uma interface rápida para a consulta de disponibilidade, simplificando o processo de reserva e melhorando a eficiência operacional da recepção.",
     tags: ["Python"],
     year: 2025,
     live: "",
@@ -65,16 +76,16 @@ const PROJECTS = [
     description:
       "Portifólio interativo com design moderno.",
     tags: ["React", "Tailwind", "TypeScript"],
-    year: 202,
-    live: "https://burgerpay.dev",
-    repo: "https://github.com/seuusuario/burgerpay",
+    year: 2025,
+    live: "",
+    repo: "https://github.com/Ratatosk123/Meu-portifolio",
   },
   {
-    title: "Dashboard de Operações",
+    title: "Rust (Em aprendizado - iniciante)",
     description:
-      "Painel com métricas de tickets abertos/fechados, SLAs e comentários em tempo real.",
-    tags: ["React", "Node", "Redis"],
-    year: 2024,
+      "Aprendendo a linguagem Rust para futuros projetos.",
+    tags: ["Rust"],
+    year: 2025,
     live: "",
     repo: "https://github.com/seuusuario/ops-dashboard",
   },
