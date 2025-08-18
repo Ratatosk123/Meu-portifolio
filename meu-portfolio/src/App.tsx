@@ -1,4 +1,4 @@
-import { useState, useMemo, ReactNode, FC } from "react";
+import { useState, useMemo, ReactNode, FC, useEffect } from "react";
 import { motion } from "framer-motion";
 import {
   Github,
@@ -17,6 +17,8 @@ import {
   Briefcase,
   GraduationCap,
   Wrench,
+  Menu,
+  X,
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -84,7 +86,7 @@ interface HeaderProps {
 }
 
 interface TimelineItemProps {
-  icon: FC<{ className?: string }>;
+  icon?: FC<{ className?: string }>;
   title: string;
   subtitle: string;
   period: string;
@@ -125,19 +127,19 @@ const SKILLS: Skill[] = [
 const TAGS: string[] = ["HTML", "TypeScript", "Laravel", "Vue.js", "Rust", "AI", "DevOps"];
 
 const PROJECTS: Project[] = [
-   {
+  {
     title: "ENIAC ACADEMY",
     description:
-      "Desenvolvi o portal Eniac Academy, uma plataforma web completa que conecta alunos da faculdade a oportunidades de estágio e trainee. O site serve como uma ponte direta entre os talentos da instituição e as empresas parceiras, facilitando o processo de recrutamento e o início da jornada profissional dos estudantes.",
+      "Desenvolvi o portal Eniac Academy, uma plataforma web completa que conecta alunos da faculdade a oportunidades de estágio e trainee.",
     tags: ["Laravel", "Vue", "TypeScript"],
     year: 2025,
     live: "",
     repo: "https://github.com/Ratatosk123/Projeto-Sistema-de-Reserva-de-Hotel-",
   },
   {
-    title: "Sistema de Reserva de Hotel (Projeto - Iniciante)",
+    title: "Sistema de Reserva de Hotel",
     description:
-      "Desenvolvi um sistema de gestão para hotéis focado em otimizar a administração de acomodações. A plataforma permite o cadastro detalhado de quartos e oferece uma interface rápida para a consulta de disponibilidade, simplificando o processo de reserva e melhorando a eficiência operacional da recepção.",
+      "Desenvolvi um sistema de gestão para hotéis focado em otimizar a administração de acomodações.",
     tags: ["Python"],
     year: 2025,
     live: "",
@@ -145,31 +147,12 @@ const PROJECTS: Project[] = [
     highlight: true,
   },
   {
-    title: "SoluMatch — Vagas com Filtro Inteligente",
-    description:
-      "Listagem de vagas com filtros por categoria e tipo de contratação, destaque visual e modal de detalhes.",
-    tags: ["PHP", "HTML", "CSS", "MySQL"],
-    year: 2025,
-    live: "",
-    repo: "https://github.com/Ratatosk123/Solumatch-PHP",
-  },
-  {
     title: "Meu portifólio",
-    description:
-      "Portifólio interativo com design moderno.",
+    description: "Portifólio interativo com design moderno.",
     tags: ["React", "Tailwind", "TypeScript"],
     year: 2025,
     live: "",
     repo: "https://github.com/Ratatosk123/Meu-portifolio",
-  },
-  {
-    title: "Rust (Em aprendizado - iniciante)",
-    description:
-      "Aprendendo a linguagem Rust para futuros projetos.",
-    tags: ["Rust"],
-    year: 2025,
-    live: "",
-    repo: "https://github.com/seuusuario/ops-dashboard",
   },
 ];
 
@@ -203,41 +186,112 @@ const Section: FC<SectionProps> = ({ id, title, icon: Icon, children }) => (
   </section>
 );
 
-const Header: FC<HeaderProps> = ({ dark, setDark }) => (
-  <header className="sticky top-0 z-50 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b">
-    <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
-      <a href="#home" className="font-semibold tracking-tight text-lg">
-        {PROFILE.name}
-      </a>
-      <nav className="hidden md:flex items-center gap-6 text-sm">
-        {[
-          ["Sobre", "about"],
-          ["Projetos", "projects"],
-          ["Experiência", "experience"],
-          ["Contato", "contact"],
-        ].map(([label, id]) => (
-          <a key={id} href={`#${id}`} className="hover:underline underline-offset-4">
-            {label}
-          </a>
-        ))}
-      </nav>
-      <div className="flex items-center gap-2">
-        <Button variant="outline" size="icon" onClick={() => setDark(!dark)} aria-label="Alternar tema">
-          {dark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
-        </Button>
-        <Button asChild>
-          <a href={PROFILE.links.resume} download>
-            <Download className="h-4 w-4 mr-2" /> CV
-          </a>
-        </Button>
+const Header: FC<HeaderProps> = ({ dark, setDark }) => {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  return (
+    <header className="sticky top-0 z-50 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b">
+      <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+        <a href="#home" className="font-semibold tracking-tight text-lg">
+          {PROFILE.name}
+        </a>
+        
+        <nav className="hidden md:flex items-center gap-6 text-sm">
+          {[
+            ["Sobre", "about"],
+            ["Projetos", "projects"],
+            ["Experiência", "experience"],
+            ["Contato", "contact"],
+          ].map(([label, id]) => (
+            <a 
+              key={id} 
+              href={`#${id}`} 
+              className="hover:underline underline-offset-4"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              {label}
+            </a>
+          ))}
+        </nav>
+
+        <div className="flex items-center gap-2">
+          <Button 
+            variant="outline" 
+            size="icon" 
+            onClick={() => setDark(!dark)} 
+            aria-label="Alternar tema"
+            className="hidden sm:inline-flex"
+          >
+            {dark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+          </Button>
+          <Button asChild>
+            <a href={PROFILE.links.resume} download>
+              <Download className="h-4 w-4 mr-2" /> <span className="hidden sm:inline">CV</span>
+            </a>
+          </Button>
+          
+          <Button 
+            variant="outline" 
+            size="icon" 
+            className="md:hidden"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          >
+            {mobileMenuOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
+          </Button>
+        </div>
       </div>
-    </div>
-  </header>
-);
+
+      {mobileMenuOpen && (
+        <div className="md:hidden bg-background border-t">
+          <div className="max-w-6xl mx-auto px-4 py-3 flex flex-col gap-3">
+            {[
+              ["Sobre", "about"],
+              ["Projetos", "projects"],
+              ["Experiência", "experience"],
+              ["Contato", "contact"],
+            ].map(([label, id]) => (
+              <a 
+                key={id} 
+                href={`#${id}`} 
+                className="hover:underline underline-offset-4 py-2"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                {label}
+              </a>
+            ))}
+            <div className="flex items-center gap-2 pt-2">
+              <Button 
+                variant="outline" 
+                size="sm" 
+                onClick={() => setDark(!dark)} 
+                className="w-full"
+              >
+                {dark ? (
+                  <>
+                    <Sun className="h-4 w-4 mr-2" /> Tema Claro
+                  </>
+                ) : (
+                  <>
+                    <Moon className="h-4 w-4 mr-2" /> Tema Escuro
+                  </>
+                )}
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
+    </header>
+  );
+};
 
 const Hero: FC = () => (
   <div className="grid md:grid-cols-[1.1fr,0.9fr] gap-8 items-center">
-    <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
+    <motion.div 
+      initial={{ opacity: 0, y: 10 }} 
+      animate={{ opacity: 1, y: 0 }} 
+      transition={{ duration: 0.5 }}
+      className="order-2 md:order-1"
+    >
       <Badge className="mb-3">{PROFILE.role}</Badge>
       <h1 className="text-3xl md:text-5xl font-bold leading-tight">
         Olá, eu sou {PROFILE.name}
@@ -262,18 +316,23 @@ const Hero: FC = () => (
           </a>
         </Button>
       </div>
-      <div className="flex items-center gap-4 mt-6 text-sm text-muted-foreground">
+      <div className="flex flex-wrap items-center gap-4 mt-6 text-sm text-muted-foreground">
         <span className="inline-flex items-center gap-1"><MapPin className="h-4 w-4" /> {PROFILE.location}</span>
         <span className="inline-flex items-center gap-1"><Mail className="h-4 w-4" /> {PROFILE.email}</span>
         <span className="inline-flex items-center gap-1"><Phone className="h-4 w-4" /> {PROFILE.phone}</span>
       </div>
     </motion.div>
 
-    <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
+    <motion.div 
+      initial={{ opacity: 0, y: 10 }} 
+      animate={{ opacity: 1, y: 0 }} 
+      transition={{ duration: 0.6 }}
+      className="order-1 md:order-2"
+    >
       <Card className="overflow-hidden">
         <CardContent className="p-0">
           <div 
-            className="aspect-[4/3] bg-muted" 
+            className="aspect-square md:aspect-[4/3] bg-muted" 
             style={{ 
               backgroundImage: `url(${PROFILE.avatarUrl})`, 
               backgroundSize: 'cover', 
@@ -321,26 +380,41 @@ const Projects: FC = () => {
 
   return (
     <div className="space-y-4">
-      <div className="flex flex-wrap items-center gap-2">
-        <div className="relative">
-          <Search className="h-4 w-4 absolute left-2 top-1/2 -translate-y-1/2" />
+      <div className="flex flex-col sm:flex-row flex-wrap items-start gap-3">
+        <div className="relative w-full sm:w-64">
+          <Search className="h-4 w-4 absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
           <Input 
-            className="pl-8 w-64" 
+            className="pl-10 w-full" 
             placeholder="Buscar projetos..." 
             value={query} 
             onChange={(e) => setQuery(e.target.value)} 
           />
         </div>
-        <Tabs value={tag} onValueChange={setTag} className="w-full md:w-auto">
-          <TabsList className="flex flex-wrap">
-            <TabsTrigger value="All">Todos</TabsTrigger>
-            {TAGS.map((t) => (
-              <TabsTrigger key={t} value={t}>{t}</TabsTrigger>
-            ))}
-          </TabsList>
-        </Tabs>
-        <Button variant="outline" onClick={() => setSort(sort === "desc" ? "asc" : "desc")}>
-          <Filter className="h-4 w-4 mr-2" /> {sort === "desc" ? "Mais novos" : "Mais antigos"}
+        
+        <div className="w-full overflow-x-auto pb-2">
+          <Tabs value={tag} onValueChange={setTag}>
+            <TabsList className="flex w-max px-1">
+              <TabsTrigger value="All" className="px-4 py-1">Todos</TabsTrigger>
+              {TAGS.map((t) => (
+                <TabsTrigger 
+                  key={t} 
+                  value={t}
+                  className="px-4 py-1 whitespace-nowrap"
+                >
+                  {t}
+                </TabsTrigger>
+              ))}
+            </TabsList>
+          </Tabs>
+        </div>
+        
+        <Button 
+          variant="outline" 
+          onClick={() => setSort(sort === "desc" ? "asc" : "desc")}
+          className="ml-auto"
+        >
+          <Filter className="h-4 w-4 mr-2" />
+          {sort === "desc" ? "Mais novos" : "Mais antigos"}
         </Button>
       </div>
 
@@ -390,11 +464,11 @@ const Projects: FC = () => {
   );
 };
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const TimelineItem: FC<TimelineItemProps> = ({ title, subtitle, period, description }) => (
+const TimelineItem: FC<TimelineItemProps> = ({ icon: Icon, title, subtitle, period, description }) => (
   <div className="relative pl-8 pb-8">
     <div className="absolute left-0 top-1.5 h-4 w-4 rounded-full bg-primary" />
     <div className="absolute left-1 top-1 w-0.5 h-full bg-border" />
+    {Icon && <Icon className="absolute left-0 top-1.5 h-4 w-4 text-primary-foreground" />}
     <h3 className="font-medium">{title}</h3>
     <p className="text-sm text-muted-foreground">
       {subtitle} · {period}
@@ -415,7 +489,7 @@ const Experience: FC = () => (
         {EXPERIENCE.map((e) => (
           <TimelineItem 
             key={e.company} 
-            icon={Briefcase} 
+            icon={Briefcase}
             title={e.role} 
             subtitle={e.company} 
             period={e.period} 
@@ -435,7 +509,7 @@ const Experience: FC = () => (
         {EDUCATION.map((e) => (
           <TimelineItem 
             key={e.school} 
-            icon={GraduationCap} 
+            icon={GraduationCap}
             title={e.course} 
             subtitle={e.school} 
             period={e.period} 
@@ -457,13 +531,13 @@ const Contact: FC = () => (
           <p className="text-muted-foreground">
             Vamos conversar sobre seu projeto? Envie uma mensagem ou chame nas redes.
           </p>
-          <div className="flex gap-2">
-            <Button variant="outline" asChild>
+          <div className="flex flex-wrap gap-2">
+            <Button variant="outline" asChild className="flex-1 min-w-[150px]">
               <a href={`mailto:${PROFILE.email}`}>
                 <Mail className="h-4 w-4 mr-2" /> Email
               </a>
             </Button>
-            <Button variant="outline" asChild>
+            <Button variant="outline" asChild className="flex-1 min-w-[150px]">
               <a href={`tel:${PROFILE.phone}`}>
                 <Phone className="h-4 w-4 mr-2" /> Telefone
               </a>
@@ -486,7 +560,7 @@ const Contact: FC = () => (
             placeholder="Sua mensagem" 
             required 
           />
-          <Button type="submit">Enviar</Button>
+          <Button type="submit" className="w-full sm:w-auto">Enviar</Button>
         </form>
       </div>
     </CardContent>
@@ -497,7 +571,28 @@ const Contact: FC = () => (
 // COMPONENTE PRINCIPAL
 // =============================
 export default function Portfolio() {
-  const [dark, setDark] = useState(true);
+  const [dark, setDark] = useState(false);
+
+  useEffect(() => {
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const savedTheme = localStorage.getItem('theme');
+    
+    if (savedTheme) {
+      setDark(savedTheme === 'dark');
+    } else {
+      setDark(prefersDark);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (dark) {
+      document.documentElement.classList.add('dark');
+      localStorage.setItem('theme', 'dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+      localStorage.setItem('theme', 'light');
+    }
+  }, [dark]);
 
   return (
     <div className={dark ? "dark" : ""}>
