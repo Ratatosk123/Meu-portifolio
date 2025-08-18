@@ -101,7 +101,7 @@ const PROFILE: Profile = {
   summary:
     "Desenvolvedor apaixonado por criar soluções rápidas, acessíveis e escaláveis. Foco em Vue.js, Laravel e TypeScript.",
   avatarUrl:
-    "https://media.licdn.com/dms/image/v2/D4D03AQEQDv5J0FI0YQ/profile-displayphoto-shrink_200_200/B4DZdUcm9MHAAc-/0/1749468475784?e=1758153600&v=beta&t=LapCZjMc5LyODhfqSdCd4hfatPlikHALZqX8xSTCjg8",
+    "https://media.licdn.com/dms/image/v2/D4D03AQE0p5KZ128YJA/profile-displayphoto-scale_200_200/B4DZi6m4M2GkAc-/0/1755477411654?e=1758153600&v=beta&t=xCj1WUf7mEi3J3ThOgoX5-deECkIzMrSnKfTeLdKyos",
   email: "allanmaiagondim.amg@gmail.com",
   phone: "+55 (11) 91852‑8563",
   links: {
@@ -125,24 +125,51 @@ const SKILLS: Skill[] = [
 const TAGS: string[] = ["HTML", "TypeScript", "Laravel", "Vue.js", "Rust", "AI", "DevOps"];
 
 const PROJECTS: Project[] = [
-  {
+   {
     title: "ENIAC ACADEMY",
     description:
-      "Desenvolvi o portal Eniac Academy, uma plataforma web completa que conecta alunos da faculdade a oportunidades de estágio e trainee.",
+      "Desenvolvi o portal Eniac Academy, uma plataforma web completa que conecta alunos da faculdade a oportunidades de estágio e trainee. O site serve como uma ponte direta entre os talentos da instituição e as empresas parceiras, facilitando o processo de recrutamento e o início da jornada profissional dos estudantes.",
     tags: ["Laravel", "Vue", "TypeScript"],
     year: 2025,
     live: "",
     repo: "https://github.com/Ratatosk123/Projeto-Sistema-de-Reserva-de-Hotel-",
-    highlight: false,
+  },
+  {
+    title: "Sistema de Reserva de Hotel (Projeto - Iniciante)",
+    description:
+      "Desenvolvi um sistema de gestão para hotéis focado em otimizar a administração de acomodações. A plataforma permite o cadastro detalhado de quartos e oferece uma interface rápida para a consulta de disponibilidade, simplificando o processo de reserva e melhorando a eficiência operacional da recepção.",
+    tags: ["Python"],
+    year: 2025,
+    live: "",
+    repo: "https://github.com/Ratatosk123/Projeto-Sistema-de-Reserva-de-Hotel-",
+    highlight: true,
+  },
+  {
+    title: "SoluMatch — Vagas com Filtro Inteligente",
+    description:
+      "Listagem de vagas com filtros por categoria e tipo de contratação, destaque visual e modal de detalhes.",
+    tags: ["PHP", "HTML", "CSS", "MySQL"],
+    year: 2025,
+    live: "",
+    repo: "https://github.com/Ratatosk123/Solumatch-PHP",
   },
   {
     title: "Meu portifólio",
-    description: "Portifólio interativo com design moderno.",
+    description:
+      "Portifólio interativo com design moderno.",
     tags: ["React", "Tailwind", "TypeScript"],
     year: 2025,
     live: "",
     repo: "https://github.com/Ratatosk123/Meu-portifolio",
-    highlight: true,
+  },
+  {
+    title: "Rust (Em aprendizado - iniciante)",
+    description:
+      "Aprendendo a linguagem Rust para futuros projetos.",
+    tags: ["Rust"],
+    year: 2025,
+    live: "",
+    repo: "https://github.com/seuusuario/ops-dashboard",
   },
 ];
 
